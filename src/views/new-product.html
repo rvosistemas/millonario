@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Agregar nuevo producto</title>
+    <!-- --------------------------- bootstrap y css --------------------------- -->
+    <link rel="stylesheet" href="../css/main.css">
     <link rel = "stylesheet" href="../css/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <!-- ------------------------------ script js ------------------------------ -->
+    <script src="../js/guardarProductos.js"></script>
 </head>
 <body>
     
@@ -23,31 +27,6 @@
             Guardar producto
         </button>
     </form>
-
-    <script>
-
-        const { ipcRenderer } = require('electron');
-
-        const form = document.querySelector('form');
-
-        form.addEventListener('submit', e =>{
-            
-            const nombreProducto = document.querySelector('#nombre').value;
-            const precioProducto = document.querySelector('#precio').value;
-            const descripcionProducto = document.querySelector('#descripcion').value;
-
-            const newProduct = {
-                nombre: nombreProducto,
-                precio: precioProducto,
-                descripcion: descripcionProducto
-            };
-            //console.log(newProduct);
-            ipcRenderer.send('product:new', newProduct);
-
-            e.preventDefault();
-
-        });
-    </script>
 
 </body>
 </html>

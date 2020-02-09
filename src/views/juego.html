@@ -4,8 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUEGO</title>
+     <!-- --------------------------- bootstrap y css --------------------------- -->
+     <link rel="stylesheet" href="../css/juego.css">
+     <link rel = "stylesheet" href="../css/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+     <!-- ------------------------------ script js ------------------------------ -->
+     <script src="../js/juego.js"></script>
 </head>
 <body>
-    
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                               cronometro                                -->
+<!-- ----------------------------------------------------------------------- -->
+
+    <section>
+        <div class="wrap">
+            <div class="widget">
+                <div class="cronometro" id="cronometro">
+                    <p id="segundos" class="segundos"></p> &nbsp;&nbsp;&nbsp; <p>seg</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                 ayudas                                  -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <br><br>
+    <section>
+        <div class="container-fluid" id="containerAyudas">
+            <h2>AYUDAS</h2>
+            <div class="container" id="ayudas">
+                <div class="row">
+                    <div class="col">50/50</div>
+                    <div class="col">Cambiar pregunta</div>
+                    <div class="col">60 segundos mas</div>
+                </div> 
+            </div>
+        </div>
+    </section>
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                                preguntas                                -->
+<!-- ----------------------------------------------------------------------- -->
+
+    <br><br>
+    <section>
+        <div class="container-fluid">
+            <div class="container" id="preguntas">
+                <div class="row">
+                    <div class="col">col</div>
+                    <div class="col">col</div>
+                    <div class="w-100"></div>
+                    <div class="col">col</div>
+                    <div class="col">col</div>
+                </div> 
+            </div>
+        </div>
+    </section>
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                            mensaje y boton                              -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <br><br>
+    <section>
+        <div class="container-fluid" id="msjBtn">
+            <div class="container" id="ayudas">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">bien hecho!</h4>
+                            <p>Es la respuesta correcta.</p>
+                            
+                        </div>
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading">Incorrecto!</h4>
+                            <p>Es la respuesta incorrecta.</p>
+                            
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="btnOk" id="btnOk">
+                            <button type="button" class="btn btn-success">Siguiente</button>
+                        </div>
+                        <div class="btnError" id="btnError">
+                            <button type="button" class="btn btn-danger">Reiniciar</button>
+                        </div>
+                        <div class="btnSalir" id="btnSalir">
+                            <button type="button" class="btn btn-primary">Salir</button>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </section>
+
 </body>
+
 </html>

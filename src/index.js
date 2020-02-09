@@ -3,6 +3,8 @@ const{ app, BrowserWindow, Menu, ipcMain } = require('electron');
 const url = require('url');
 const path = require('path');
 
+/* ------------------- para no recargar y ver los cambios ------------------- */
+
 if(process.env.NODE_ENV !== 'production'){ // si esta en produccion ya no ejecuta electron reload
     require('electron-reload')(__dirname,{ //recarga el html
         electron: path.join(__dirname, '../node_modules','.bin', 'electron') //recarga el js
@@ -10,7 +12,11 @@ if(process.env.NODE_ENV !== 'production'){ // si esta en produccion ya no ejecut
 }
 
 let mainWindow // es una variable global, esto se hace ya que cuando se cierre la ventana libere recursos del pc
-let newProductWindow
+let newGameWindow
+
+/* -------------------------------------------------------------------------- */
+/*                              inicio de la app                              */
+/* -------------------------------------------------------------------------- */
 
 app.on(
     'ready',() => {
@@ -36,54 +42,67 @@ app.on(
     }
 );
 
-function createNewProductWindow(){
+/* -------------------------------------------------------------------------- */
+/*                              ventana de juego                              */
+/* -------------------------------------------------------------------------- */
 
-    newProductWindow = new BrowserWindow({
-        width: 400, 
-        height: 330,
-        title: 'Agregar Nuevo Producto',
+function createNewGameWindow(){
+
+    newGameWindow = new BrowserWindow({
+        width: 1280, 
+        height: 720,
+        title: 'NUevo Juego',
         webPreferences: {
             nodeIntegration: true
         }
     });
 
-    //newProductWindow.setMenu(null);
+    //newGameWindow.setMenu(null);// para que no aparezca menu en la ventana juego
 
-    newProductWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'views/new-product.html'),
+    newGameWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'views/juego.html'),
         protocol: 'file',
         slashes: true
     }))
 
-    newProductWindow.on('closed',()=>{ // cuando la ventana principal se cierre quita toda la aplicacion
-        newProductWindow = null;
+    newGameWindow.on('closed',()=>{ // para cerrar la ventana
+        newGameWindow = null;
     });
 
 }
 
-ipcMain.on('product:new', (e, newProduct) => {
+/* -------------------------------------------------------------------------- */
+/*                         comunicacion entre ventanas                        */
+/* -------------------------------------------------------------------------- */
+
+/*ipcMain.on('product:new', (e, newProduct) => {
     mainWindow.webContents.send('product:new', newProduct);
     newProductWindow.close();
-});
+});*/
+
+
+/* -------------------------------------------------------------------------- */
+/*                                    menu                                    */
+/* -------------------------------------------------------------------------- */
 
 const templateMenu = [
     {
         label: 'Archivo',
         submenu: [
             {
-                label: 'Nuevo Producto',
+                label: 'Nuevo Juego',
                 accelerator: 'Ctrl+N',
                 click(){
-                    createNewProductWindow();
+                    createNewGameWindow();
                 }
             },
-            {
+            /*{
                 label: 'Remover todos los productos',
                 accelerator: 'Ctrl+R',
                 click(){
                     mainWindow.webContents.send('products:remove-all');
                 }
-            },
+            },*/
             {
                 label: 'Salir',
                         accelerator: process.platform == 'darwin' ? 'command+Q' : 'Ctrl+Q', // mira que plataforma es mac, win o linux 'darwin' es el identificador de mac
@@ -96,11 +115,17 @@ const templateMenu = [
 
 ];
 
+/* ------------------------- verfica si esta en mac ------------------------- */
+
 if(process.platform === 'darwin'){
     templateMenu.unshift({
         label: app.getName()
     });
 }
+
+/* -------------------------------------------------------------------------- */
+/*                 para ver las herramientas de desarrollador                 */
+/* -------------------------------------------------------------------------- */
 
 if(process.env.NODE_ENV !== 'production'){
     templateMenu.push({
