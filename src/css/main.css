@@ -1,0 +1,38 @@
+section{
+    margin: 10px;
+}
+
+footer{
+    margin: 10px;
+    color: aliceblue;
+    font: normal 0.2em sans-serif;
+    text-align: center;
+}
+
+h1{
+    font: bold 1.7em verdana, arial, sans-serif;
+    text-shadow: black 2px 2px 3px;
+    color: white;
+}
+
+p{
+    font: normal 2.4em verdana, arial, sans-serif;
+}
+
+body{
+    /*background-color: rgb(55, 8, 184);*/
+    background: -webkit-linear-gradient( bottom, blue, rgb(2, 235, 223) );
+}
+
+.jumbotron{
+    padding: 10px;
+    /*opacity: 0.7;*/
+    height: 430px;
+    font: bold;
+    text-align: center;
+    background-image: url("../images/intro2.jpg");
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    color: blue;
+}
