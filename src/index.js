@@ -1,5 +1,6 @@
 const{ app, BrowserWindow, Menu, ipcMain } = require('electron');
 
+app.disableHardwareAcceleration();    
 const url = require('url');
 const path = require('path');
 
@@ -68,7 +69,6 @@ function createNewGameWindow(){
     newGameWindow.on('closed',()=>{ // para cerrar la ventana
         newGameWindow = null;
     });
-
 }
 
 /* -------------------------------------------------------------------------- */

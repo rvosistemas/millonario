@@ -12,7 +12,8 @@
   "dependencies": {
     "electron": "^7.1.8",
     "electron-reload": "^1.5.0",
-    "exceljs": "^3.7.0"
+    "exceljs": "^3.7.0",
+    "sweetalert2": "^9.7.2"
   },
   "devDependencies": {},
   "description": ""
