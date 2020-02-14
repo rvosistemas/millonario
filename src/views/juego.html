@@ -13,6 +13,12 @@
 <body>
 
 <!-- ----------------------------------------------------------------------- -->
+<!--                              efecto carga                               -->
+<!-- ----------------------------------------------------------------------- -->
+<div id="contenedor_carga">
+    <div id="carga"></div>
+</div>
+<!-- ----------------------------------------------------------------------- -->
 <!--                               cronometro                                -->
 <!-- ----------------------------------------------------------------------- -->
 
@@ -35,9 +41,9 @@
             <h2>AYUDAS</h2>
             <div class="container" id="ayudas">
                 <div class="row">
-                    <div class="col">50/50</div>
-                    <div class="col">Cambiar pregunta</div>
-                    <div class="col">60 segundos mas</div>
+                    <div class="col" id="cincuentaCincuenta">50/50</div>
+                    <div class="col" id="cambiarPregunta">Cambiar pregunta</div>
+                    <div class="col" id="masSegundos">60 segundos mas</div>
                 </div> 
             </div>
         </div>
@@ -53,11 +59,11 @@
             <div class="container" id="preguntas">
                 <h2 id="pregunta"></h2>
                 <div class="row">
-                    <div class="col" id="opc1"></div>
-                    <div class="col" id="opc2"></div>
+                    <div class="col" id="a"></div>
+                    <div class="col" id="b"></div>
                     <div class="w-100"></div>
-                    <div class="col" id="opc3"></div>
-                    <div class="col" id="opc4"></div>
+                    <div class="col" id="c"></div>
+                    <div class="col" id="d"></div>
                 </div> 
             </div>
         </div>
@@ -72,15 +78,13 @@
             <div class="container" id="ayudas">
                 <div class="row">
                     <div class="col-10">
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success" role="alert" id="alertaOk">
                             <h4 class="alert-heading">bien hecho!</h4>
-                            <p>Es la respuesta correcta.</p>
-                            
+                            <p>Es la respuesta correcta.</p>                           
                         </div>
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-danger" role="alert" id="alertaError">
                             <h4 class="alert-heading">Incorrecto!</h4>
-                            <p>Es la respuesta incorrecta.</p>
-                            
+                            <p>Es la respuesta incorrecta.</p>                        
                         </div>
                     </div>
                     <div class="col-2">
