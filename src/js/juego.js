@@ -7,7 +7,7 @@ var segundos;
 var preguntas = [];
 
 var cincuentaCincuenta;
-var cambiarPregunta;
+var pista;
 var masSegundos;
 
 var opca;
@@ -16,6 +16,7 @@ var opcc;
 var opcd;
 var pregunta;
 var respuesta;
+var pistaPregunta;
 var iterador;
 
 var btnOk;
@@ -26,7 +27,6 @@ var alertaOk;
 var alertaError;
 
 function comenzar(){
-
     /* -------------------------------- opciones -------------------------------- */
     opca = document.getElementById("a");
     opcb = document.getElementById("b");
@@ -34,62 +34,53 @@ function comenzar(){
     opcd = document.getElementById("d");
     pregunta = document.getElementById("pregunta");
 
+    habilitarOpciones();
+
     opca.addEventListener("click",verificarRespuesta,false);        
     opcb.addEventListener("click",verificarRespuesta,false);        
     opcc.addEventListener("click",verificarRespuesta,false);        
-    opcd.addEventListener("click",verificarRespuesta,false);     
+    opcd.addEventListener("click",verificarRespuesta,false);    
+
     /* --------------------------------- ayudas --------------------------------- */
     cincuentaCincuenta = document.getElementById("cincuentaCincuenta");
-    cambiarPregunta = document.getElementById("cambiarPregunta");
+    pista = document.getElementById("pista");
     masSegundos = document.getElementById("masSegundos");
 
-    cincuentaCincuenta.addEventListener("click",cincuentaCincuenta,false);
-    //cincuentaCincuenta.style.pointerEvents = "auto";
+    habilitarAyudas();
 
-    cambiarPregunta.addEventListener("click",cambiarPregunta,false);
-    //cambiarPregunta.style.pointerEvents = "auto";
-
-    masSegundos.addEventListener("click",masSegundos,false);
-    //masSegundos.style.pointerEvents = "auto";
+    cincuentaCincuenta.addEventListener("click",cincuenta,false);
+    pista.addEventListener("click",obtenerPista,false);
+    masSegundos.addEventListener("click",segundosMas,false);
 
     /* --------------------------------- botones -------------------------------- */
     btnOk = document.getElementById("btnOk");
-    btnOk.style.visibility = 'hidden';
-    btnOk.style.opacity = '0';
-    btnOk.addEventListener("click",siguiente,false);
-
     btnError = document.getElementById("btnError");
-    btnError.style.visibility = 'hidden';
-    btnError.style.opacity = '0';
-    btnError.addEventListener("click",reiniciar,false);
-
     btnSalir = document.getElementById("btnSalir");
+
+    esconderBotones();
+
+    btnOk.addEventListener("click",siguiente,false);
+    btnError.addEventListener("click",reiniciar,false);
     btnSalir.addEventListener("click",salir,false);
 
     /* --------------------------------- alertas -------------------------------- */
     alertaOk = document.getElementById("alertaOk");
-    alertaOk.style.visibility = 'hidden';
-    alertaOk.style.opacity = '0';
-
     alertaError = document.getElementById("alertaError");
-    alertaError.style.visibility = 'hidden';
-    alertaError.style.opacity = '0';
+    
+    esconderAlertas();
 
     /* ---------------------------------- carga --------------------------------- */
     var contenedor = document.getElementById('contenedor_carga');
     contenedor.style.visibility = 'hidden';
     contenedor.style.opacity = '0';
 
+    /* --------------------------- llamada a funciones -------------------------- */
+    datosExcel();  
+
     /* ------------------------------- cronometro ------------------------------- */
     pSegundos = document.getElementById("segundos");
-    pSegundos.textContent = 59;
-    segundos = 59;
+    iniciarCronometro();
 
-    /* --------------------------- llamada a funciones -------------------------- */
-    datosExcel();
-    setInterval(function(){
-        cuentaRegresiva();
-    },1000);   
 }
 
 /* -------------------------------------------------------------------------- */
@@ -104,6 +95,14 @@ function cuentaRegresiva(){
         }
     }
     pSegundos.textContent = segundos;
+}
+
+function iniciarCronometro(){
+    pSegundos.textContent = 59;
+    segundos = 59;
+    setInterval(function(){
+        cuentaRegresiva();
+    },1000); 
 }
 
 /* -------------------------------------------------------------------------- */
@@ -140,6 +139,7 @@ function cargarPreguntas(i){
     opcd.innerHTML = preguntas[iterador].getCell(4).value;
     pregunta.innerHTML = preguntas[iterador].getCell(5).value;
     respuesta = preguntas[iterador].getCell(6).value; 
+    pistaPregunta = preguntas[iterador].getCell(7).value; 
     
 }
 
@@ -156,11 +156,6 @@ function verificarRespuesta(respuestaSeleccionada){
         cancelButtonText: 'escoger otra opcion'
     }).then((result) => {
         if (result.value) {
-            /*Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            )*/
              if(respuestaSeleccionada.target.id == respuesta){
                 console.log("respuesta correcta");
                 alertaOk.style.visibility = 'visible';
@@ -168,50 +163,210 @@ function verificarRespuesta(respuestaSeleccionada){
                 btnOk.style.visibility = 'visible';
                 btnOk.style.opacity = '1';
                 iterador++;
+                inhabilitarOpciones();
             }else{
                 console.log("respuesta incorrecta");
                 alertaError.style.visibility = 'visible';
                 alertaError.style.opacity = '1';
                 btnError.style.visibility = 'visible';
                 btnError.style.opacity = '1';
+                inhabilitarOpciones();
             }
         }
     })   
 }
 
+function habilitarOpciones(){
+    opca.style.pointerEvents = "auto";
+    opcb.style.pointerEvents = "auto";
+    opcc.style.pointerEvents = "auto";
+    opcd.style.pointerEvents = "auto";
+}
+
+function inhabilitarOpciones(){
+    opca.style.pointerEvents = "none";
+    opcb.style.pointerEvents = "none";
+    opcc.style.pointerEvents = "none";
+    opcd.style.pointerEvents = "none";
+}    
+
 /* -------------------------------------------------------------------------- */
 /*                                   ayudas                                   */
 /* -------------------------------------------------------------------------- */
-function cincuentaCincuenta(){
-    console.log("50 y 50");
-    //cincuentaCincuenta.style.pointerEvents = "none";
-    segundos+=30;
+function cincuenta(){
+    Swal.fire({
+        title: 'Desea usar la ayuda cincuenta cincuenta?',
+        text: "Estas seguro o segura, no podra usarla de nuevo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.value) {
+            quitarPreguntas();
+            cincuentaCincuenta.style.pointerEvents = "none";
+            cincuentaCincuenta.style.backgroundColor = "red";
+        }
+    }) 
 }
 
-function cambiarPregunta(){
-    cambiarPregunta.style.pointerEvents = "none";
-
+function obtenerPista(){
+    Swal.fire({
+        title: 'Desea usar la ayuda y obtener una pista?',
+        text: "Estas seguro o segura, no podra usarla de nuevo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.value) {
+            Swal.fire(
+                'La pista es la siguiente:',
+                pistaPregunta,
+                'info'
+            )
+            pista.style.pointerEvents = "none";
+            pista.style.backgroundColor = "red";
+        }
+    }) 
 }
 
-function masSegundos(){
-    masSegundos.style.pointerEvents = "none";
+function segundosMas(){
+    Swal.fire({
+        title: 'Desea usar la ayuda y obtener 30 segundos mas?',
+        text: "Estas seguro o segura, no podra usarla de nuevo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.value) {
+            masSegundos.style.pointerEvents = "none";
+            masSegundos.style.backgroundColor = "red";
+            segundos+=30;
+        }
+    }) 
+}
+
+function habilitarAyudas(){
+    cincuentaCincuenta.style.pointerEvents = "auto";
+    pista.style.pointerEvents = "auto";
+    masSegundos.style.pointerEvents = "auto";
+
+    cincuentaCincuenta.style.backgroundColor = "blue";
+    pista.style.backgroundColor = "blue";
+    masSegundos.style.backgroundColor = "blue";
+}
+
+function quitarPreguntas() {
+    console.log(respuesta);
+    var res;
+
+    switch (respuesta) {
+        case 'a':
+            res = 1;
+            break;
+        case 'b':
+            res = 2;
+            break;
+        case 'c':
+            res = 3;
+            break;
+        case 'd':
+            res = 4;
+            break;
+        default:
+            console.log("error al agregar numero a la opcion");
+            break;
+    }
+
+    var aleatorio;
+    var aleatorio2;
+    do{
+        aleatorio = Math.floor(Math.random() * (5 - 1)) + 1;
+        aleatorio2 = Math.floor(Math.random() * (5 - 1)) + 1;
+    }while(aleatorio == res || aleatorio2 == res || aleatorio == aleatorio2);
+
+    console.log(res,aleatorio,aleatorio2);
+    switch (aleatorio) {
+        case 1:
+            opca.innerHTML = "";
+            opca.style.pointerEvents = "none";
+            break;
+        case 2:
+            opcb.innerHTML = "";
+            opcb.style.pointerEvents = "none";
+            break;
+        case 3:
+            opcc.innerHTML = "";
+            opcc.style.pointerEvents = "none";
+            break;
+        case 4:
+            opcd.innerHTML = "";
+            opcd.style.pointerEvents = "none";  
+            break;
+        default:
+            console.log("error al devolver de numero a letra");
+            break;
+    }
+    switch (aleatorio2) {
+        case 1:
+            opca.innerHTML = "";
+            opca.style.pointerEvents = "none";
+            break;
+        case 2:
+            opcb.innerHTML = "";
+            opcb.style.pointerEvents = "none";
+            break;
+        case 3:
+            opcc.innerHTML = "";
+            opcc.style.pointerEvents = "none";
+            break;
+        case 4:
+            opcd.innerHTML = "";
+            opcd.style.pointerEvents = "none";  
+            break;
+        default:
+            console.log("error al devolver de numero a letra");
+            break;
+    }   
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                   botones                                  */
 /* -------------------------------------------------------------------------- */
+function esconderBotones(){
+    btnOk.style.visibility = 'hidden';
+    btnError.style.visibility = 'hidden';
+
+    btnOk.style.opacity = '0';
+    btnError.style.opacity = '0';
+}
+
 function siguiente(){
     cargarPreguntas(iterador);
     alertaOk = document.getElementById("alertaOk");
     alertaOk.style.visibility = 'hidden';
     alertaOk.style.opacity = '0';
-
-    pSegundos.textContent = 59;
-    segundos = 59;
-    setInterval(function(){
-        cuentaRegresiva();
-    },1000);
-
+    if(iterator < 15){
+        Swal.fire(
+            '!FELICIDADES HA GANADO !',
+            'A logrado contestar todas las preguntas satisfactoriamente',
+            'sucess'
+        )
+    }else{
+        habilitarAyudas();
+        habilitarOpciones();
+        esconderAlertas();
+        esconderBotones();
+        iniciarCronometro();
+    }
 }
 
 function reiniciar(){
@@ -248,5 +403,15 @@ function salir(){
     })     
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                   alertas                                  */
+/* -------------------------------------------------------------------------- */
+function esconderAlertas(){
+    alertaOk.style.visibility = 'hidden';
+    alertaError.style.visibility = 'hidden';
+
+    alertaOk.style.opacity = '0';
+    alertaError.style.opacity = '0';
+}
 
 window.addEventListener("load", comenzar, false);
