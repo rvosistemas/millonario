@@ -10,6 +10,12 @@ var cincuentaCincuenta;
 var pista;
 var masSegundos;
 
+var audio1a5;
+var audio6a10;
+var audio11a15;
+var audioCorrecta;
+var audioIncorrecta;
+
 var opca;
 var opcb;
 var opcc;
@@ -40,6 +46,19 @@ function comenzar(){
     opcb.addEventListener("click",verificarRespuesta,false);        
     opcc.addEventListener("click",verificarRespuesta,false);        
     opcd.addEventListener("click",verificarRespuesta,false);    
+
+    /* --------------------------------- audios --------------------------------- */
+    audio1a5 = document.getElementById("cancionPregunta1a5");
+    audio6a10 = document.getElementById("cancionPregunta6a10");
+    audio11a15 = document.getElementById("cancionPregunta11a15");
+    audioCorrecta = document.getElementById("cancionCorrecta");
+    audioIncorrecta = document.getElementById("cancionIncorrecta");
+
+    audio1a5.play();
+    audio6a10.pause();
+    audio11a15.pause();
+    audioCorrecta.pause();
+    audioIncorrecta.pause();
 
     /* --------------------------------- ayudas --------------------------------- */
     cincuentaCincuenta = document.getElementById("cincuentaCincuenta");
@@ -93,6 +112,9 @@ function cuentaRegresiva(){
         if (segundos > 0) {
             segundos=segundos-1;        
         }
+        else{
+            tiempoTerminado();
+        }
     }
     pSegundos.textContent = segundos;
 }
@@ -103,6 +125,10 @@ function iniciarCronometro(){
     setInterval(function(){
         cuentaRegresiva();
     },1000); 
+}
+
+function tiempoTerminado(){
+    respuestaIncorrecta();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -140,6 +166,28 @@ function cargarPreguntas(i){
     pregunta.innerHTML = preguntas[iterador].getCell(5).value;
     respuesta = preguntas[iterador].getCell(6).value; 
     pistaPregunta = preguntas[iterador].getCell(7).value; 
+
+    if(i < 5){
+        audio1a5.play();
+        audio6a10.pause();
+        audio11a15.pause();
+        audioCorrecta.pause();
+        audioIncorrecta.pause();
+    }
+    if(i >= 5 & i < 10){
+        audio1a5.pause();
+        audio6a10.play();
+        audio11a15.pause();
+        audioCorrecta.pause();
+        audioIncorrecta.pause();
+    }
+    if(i>= 10){
+        audio1a5.pause();
+        audio6a10.pause();
+        audio11a15.play();
+        audioCorrecta.pause();
+        audioIncorrecta.pause();
+    }
     
 }
 
@@ -157,23 +205,57 @@ function verificarRespuesta(respuestaSeleccionada){
     }).then((result) => {
         if (result.value) {
              if(respuestaSeleccionada.target.id == respuesta){
-                console.log("respuesta correcta");
-                alertaOk.style.visibility = 'visible';
-                alertaOk.style.opacity = '1';
-                btnOk.style.visibility = 'visible';
-                btnOk.style.opacity = '1';
-                iterador++;
-                inhabilitarOpciones();
+                respuestaCorrecta();
             }else{
                 console.log("respuesta incorrecta");
-                alertaError.style.visibility = 'visible';
-                alertaError.style.opacity = '1';
-                btnError.style.visibility = 'visible';
-                btnError.style.opacity = '1';
-                inhabilitarOpciones();
+                respuestaIncorrecta();            
             }
         }
     })   
+}
+
+function respuestaCorrecta(){
+
+    audio1a5.pause();
+    audio6a10.pause();
+    audio11a15.pause();
+    audioCorrecta.play();
+    audioIncorrecta.pause();
+
+    Swal.fire(
+        '!FELICIDADES!',
+        'Ha contestado correctamente',
+        'sucess'
+    )
+
+    console.log("respuesta correcta");
+    alertaOk.style.visibility = 'visible';
+    alertaOk.style.opacity = '1';
+    btnOk.style.visibility = 'visible';
+    btnOk.style.opacity = '1';
+    iterador++;
+    inhabilitarOpciones();
+}
+
+function respuestaIncorrecta(){
+
+    audio1a5.pause();
+    audio6a10.pause();
+    audio11a15.pause();
+    audioCorrecta.pause();
+    audioIncorrecta.play();
+
+    Swal.fire(
+        '! HAS FALLADO !',
+        'Se acabo el tiempo o has seleccionado la respuesta incorrecta',
+        'error'
+    )
+
+    alertaError.style.visibility = 'visible';
+    alertaError.style.opacity = '1';
+    btnError.style.visibility = 'visible';
+    btnError.style.opacity = '1';
+    inhabilitarOpciones();
 }
 
 function habilitarOpciones(){

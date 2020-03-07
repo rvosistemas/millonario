@@ -1,4 +1,4 @@
-const{ app, BrowserWindow, Menu, ipcMain } = require('electron');
+const{ app, BrowserWindow, Menu, webContents, ipcMain } = require('electron');
 
 app.disableHardwareAcceleration();    
 const url = require('url');
@@ -23,15 +23,23 @@ app.on(
     'ready',() => {
 
         mainWindow = new BrowserWindow({
+            icon: path.join(__dirname, 'images/sitesaLogo.ico'),
             webPreferences: {
                 nodeIntegration: true
             }
         });
+
         mainWindow.loadURL(url.format({
             pathname: path.join(__dirname, 'views/index.html'),
             protocol: 'file',
             slashes: true
         }))
+
+        const iconUrl = url.format({
+            pathname: path.join(__dirname, 'images/sitesaLogo.ico'),
+            protocol: 'file',
+            slashes: true
+        })
 
         const mainMenu = Menu.buildFromTemplate(templateMenu);
         Menu.setApplicationMenu(mainMenu);
@@ -43,6 +51,8 @@ app.on(
     }
 );
 
+
+
 /* -------------------------------------------------------------------------- */
 /*                              ventana de juego                              */
 /* -------------------------------------------------------------------------- */
@@ -50,6 +60,7 @@ app.on(
 function createNewGameWindow(){
 
     newGameWindow = new BrowserWindow({
+        icon: path.join(__dirname, 'images/sitesaLogo.ico'),
         width: 1280, 
         height: 720,
         title: 'NUevo Juego',
@@ -72,6 +83,41 @@ function createNewGameWindow(){
 }
 
 /* -------------------------------------------------------------------------- */
+/*                          ventana de instrucciones                          */
+/* -------------------------------------------------------------------------- */
+
+function createNewManualWindow(){
+
+    newManualWindow = new BrowserWindow({
+        icon: path.join(__dirname, 'images/sitesaLogo.ico'),
+        width: 1280, 
+        height: 720,
+        title: 'Instrucciones',
+        webPreferences: {
+            nodeIntegration: true
+        }
+    });
+
+    //newGameWindow.setMenu(null);// para que no aparezca menu en la ventana juego
+
+    newManualWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'views/manual.html'),
+        protocol: 'file',
+        slashes: true
+    }))
+
+    newManualWindow.on('closed',()=>{ // para cerrar la ventana
+        newManualWindow = null;
+    });
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   botones                                  */
+/* -------------------------------------------------------------------------- */
+
+
+
+/* -------------------------------------------------------------------------- */
 /*                         comunicacion entre ventanas                        */
 /* -------------------------------------------------------------------------- */
 
@@ -80,6 +126,10 @@ function createNewGameWindow(){
     newProductWindow.close();
 });*/
 
+ipcMain.on('invokeAction', function(event, data){
+    var result = processData(data);
+    event.sender.send('actionReply', result);
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                    menu                                    */

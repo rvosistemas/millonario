@@ -12,15 +12,46 @@
 </head>
 <body>
 
-<!-- ----------------------------------------------------------------------- -->
-<!--                              efecto carga                               -->
-<!-- ----------------------------------------------------------------------- -->
-<div id="contenedor_carga">
-    <div id="carga"></div>
-</div>
-<!-- ----------------------------------------------------------------------- -->
-<!--                               cronometro                                -->
-<!-- ----------------------------------------------------------------------- -->
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                              efecto carga                               -->
+    <!-- ----------------------------------------------------------------------- -->
+    <div id="contenedor_carga">
+        <div id="carga"></div>
+    </div>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                  logo                                   -->
+    <!-- ----------------------------------------------------------------------- -->
+
+    <section>
+        <div class="widget">
+            <figure>  
+            <img src="../images/sitesa.jpeg" alt="icono sitesa" id="logoImg">  
+            </figure>
+        </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                  audios                                 -->
+    <!-- ----------------------------------------------------------------------- -->
+    <audio id="cancionPregunta1a5">
+        <source src="../audio/preguntas1-5.mp3" type="audio/mp3">
+    </audio>
+    <audio id="cancionPregunta6a10">
+        <source src="../audio/preguntas6-10.mp3" type="audio/mp3">
+    </audio>
+    <audio id="cancionPregunta11a15">
+        <source src="../audio/preguntas11-15.mp3" type="audio/mp3">
+    </audio>
+    <audio id="cancionCorrecta">
+        <source src="../audio/respuesta correcta.mp3" type="audio/mp3">
+    </audio>
+    <audio id="cancionIncorrecta">
+        <source src="../audio/respuestaincorrecta.mp3" type="audio/mp3">
+    </audio>
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                               cronometro                                -->
+    <!-- ----------------------------------------------------------------------- -->
 
     <section>
         <div class="wrap">
@@ -31,11 +62,12 @@
             </div>
         </div>
     </section>
+
     <!-- ----------------------------------------------------------------------- -->
     <!--                                 ayudas                                  -->
     <!-- ----------------------------------------------------------------------- -->
 
-    <br><br>
+    <br>
     <section>
         <div class="container-fluid" id="containerAyudas">
             <h2>AYUDAS</h2>
@@ -82,8 +114,8 @@
                         <p>Es la respuesta correcta.</p>                           
                     </div>
                     <div class="alert alert-danger" role="alert" id="alertaError">
-                        <h4 class="alert-heading">Incorrecto!</h4>
-                        <p>Es la respuesta incorrecta.</p>                        
+                        <h4 class="alert-heading">Has perdido!</h4>
+                        <p>Es la respuesta incorrecta o el tiempo a terminado.</p>                        
                     </div>
                 </div>
                 <div class="col-2">

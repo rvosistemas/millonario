@@ -6,14 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>QUIEN QUIERE SER MILLONARIO</title>
 
-<!-- --------------------------- bootstrap y css --------------------------- -->
+<!-- --------------------------- bootstrap icono y css --------------------------- -->
 
     <link rel = "stylesheet" href="../css/bootstrap-4.4.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/main.css">
 
 <!-- ------------------------------ script js ------------------------------ -->
 
-    <script src="../js/mostrarProductos.js"></script>
+    <!-- <script src="../js/mostrarProductos.js"></script> -->
+    <script src="../js/inicio.js"></script> 
 
 </head>
 <body>
@@ -27,14 +28,19 @@
     <section>
         <div class="container">
             <h1 class="display-4">QUIEN QUIERE SER MILLONARIO</h1>
-            <p>Has click en jugar o mira las instrucciones</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Iniciar</a>
+            <audio id="cancionInicio">
+                <source src="../audio/Canción Inicial.mp3" type="audio/mp3">
+            </audio>
+            <!-- <p>Has click en jugar o mira las instrucciones</p>
+            <a class="btn btn-primary btn-lg" id="iniciar" type="button">Iniciar</a>
             &nbsp;&nbsp;&nbsp;
-            <a class="btn btn-info btn-lg" href="#" role="button">instrucciones</a>
+            <a class="btn btn-info btn-lg" id="manual" type="button">instrucciones</a> -->
         </div>
     </section>
 
     <footer>
+        <img src="../images/sitesa.jpeg" alt="logo sitesa" id="logoSitesa">
+        <br><br>
         <h6>TODOS LOS DERECHOS RESERVADOS 2020</h6>
     </footer>
 
