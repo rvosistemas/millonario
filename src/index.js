@@ -1,14 +1,14 @@
-const{ app, BrowserWindow, Menu, webContents, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, webContents, ipcMain } = require('electron');
 
-app.disableHardwareAcceleration();    
+app.disableHardwareAcceleration();
 const url = require('url');
 const path = require('path');
 
 /* ------------------- para no recargar y ver los cambios ------------------- */
 
-if(process.env.NODE_ENV !== 'production'){ // si esta en produccion ya no ejecuta electron reload
-    require('electron-reload')(__dirname,{ //recarga el html
-        electron: path.join(__dirname, '../node_modules','.bin', 'electron') //recarga el js
+if (process.env.NODE_ENV !== 'production') { // si esta en produccion ya no ejecuta electron reload
+    require('electron-reload')(__dirname, { //recarga el html
+        electron: path.join(__dirname, '../node_modules', '.bin', 'electron') //recarga el js
     })
 }
 
@@ -20,7 +20,7 @@ let newGameWindow
 /* -------------------------------------------------------------------------- */
 
 app.on(
-    'ready',() => {
+    'ready', () => {
 
         mainWindow = new BrowserWindow({
             icon: path.join(__dirname, 'images/sitesaLogo.ico'),
@@ -44,7 +44,7 @@ app.on(
         const mainMenu = Menu.buildFromTemplate(templateMenu);
         Menu.setApplicationMenu(mainMenu);
 
-        mainWindow.on('closed',()=>{ // cuando la ventana principal se cierre quita toda la aplicacion
+        mainWindow.on('closed', () => { // cuando la ventana principal se cierre quita toda la aplicacion
             app.quit();
         });
 
@@ -57,11 +57,11 @@ app.on(
 /*                              ventana de juego                              */
 /* -------------------------------------------------------------------------- */
 
-function createNewGameWindow(){
+function createNewGameWindow() {
 
     newGameWindow = new BrowserWindow({
         icon: path.join(__dirname, 'images/sitesaLogo.ico'),
-        width: 1280, 
+        width: 1280,
         height: 720,
         title: 'NUevo Juego',
         webPreferences: {
@@ -77,7 +77,7 @@ function createNewGameWindow(){
         slashes: true
     }))
 
-    newGameWindow.on('closed',()=>{ // para cerrar la ventana
+    newGameWindow.on('closed', () => { // para cerrar la ventana
         newGameWindow = null;
     });
 }
@@ -86,11 +86,11 @@ function createNewGameWindow(){
 /*                          ventana de instrucciones                          */
 /* -------------------------------------------------------------------------- */
 
-function createNewManualWindow(){
+function createNewManualWindow() {
 
     newManualWindow = new BrowserWindow({
         icon: path.join(__dirname, 'images/sitesaLogo.ico'),
-        width: 1280, 
+        width: 1280,
         height: 720,
         title: 'Instrucciones',
         webPreferences: {
@@ -106,7 +106,7 @@ function createNewManualWindow(){
         slashes: true
     }))
 
-    newManualWindow.on('closed',()=>{ // para cerrar la ventana
+    newManualWindow.on('closed', () => { // para cerrar la ventana
         newManualWindow = null;
     });
 }
@@ -126,7 +126,7 @@ function createNewManualWindow(){
     newProductWindow.close();
 });*/
 
-ipcMain.on('invokeAction', function(event, data){
+ipcMain.on('invokeAction', function (event, data) {
     var result = processData(data);
     event.sender.send('actionReply', result);
 });
@@ -142,7 +142,7 @@ const templateMenu = [
             {
                 label: 'Nuevo Juego',
                 accelerator: 'Ctrl+N',
-                click(){
+                click() {
                     createNewGameWindow();
                 }
             },
@@ -155,19 +155,19 @@ const templateMenu = [
             },*/
             {
                 label: 'Salir',
-                        accelerator: process.platform == 'darwin' ? 'command+Q' : 'Ctrl+Q', // mira que plataforma es mac, win o linux 'darwin' es el identificador de mac
-                        click(){
-                            app.quit();
-                        }
+                accelerator: process.platform == 'darwin' ? 'command+Q' : 'Ctrl+Q', // mira que plataforma es mac, win o linux 'darwin' es el identificador de mac
+                click() {
+                    app.quit();
+                }
             }
         ]
     }
 
 ];
 
-/* ------------------------- verfica si esta en mac ------------------------- */
+/* ------------------------- verifica si esta en mac ------------------------- */
 
-if(process.platform === 'darwin'){
+if (process.platform === 'darwin') {
     templateMenu.unshift({
         label: app.getName()
     });
@@ -177,19 +177,19 @@ if(process.platform === 'darwin'){
 /*                 para ver las herramientas de desarrollador                 */
 /* -------------------------------------------------------------------------- */
 
-if(process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV !== 'production') {
     templateMenu.push({
         label: 'DevTools',
-        submenu:[
+        submenu: [
             {
                 label: 'Mostrar/Ocultar dev Tools',
                 accelerator: 'Ctrl+D',
-                click(item, focusedWindow){
+                click(item, focusedWindow) {
                     focusedWindow.toggleDevTools();
                 }
             },
             {
-                role: 'reload' 
+                role: 'reload'
             }
         ]
     });
